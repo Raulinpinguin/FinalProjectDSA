@@ -94,17 +94,18 @@ void Airport::calculateAverages()
         iter->second->_delayTimeAvg = addDelayTime / iter->second->_delayTime.size();
         iter->second->_airlineDelayTimeAvg = addAirlineDelayTime / iter->second->_airlineDelayTime.size();
         iter->second->_delayRatio = iter->second->_delaysAvg / iter->second->_arrivalsAvg;
-        iter->second->_airlineDelayRatio = iter->second->_airlineDelaysAvg / iter->second->_delaysAvg;
+        iter->second->_airlineDelayRatio = iter->second->_airlineDelaysAvg / iter->second->_arrivalsAvg;
     }
 }
 
-vector<string> Airport::findAirlinesWithLeastDelayRatio(int month)
+pair<vector<string>, vector<string>> Airport::findAirlinesWithLeastDelayRatio(int month)
 {
     //Calculate averages for arrivals and delays.
     calculateAverages();
 
     //Sort by delayRatio
     vector<double> delayRatios;
+    vector<string> onTimeRatios;
     for(auto iter = _airlines.begin(); iter != _airlines.end(); iter++)
     {
         if(iter->first.first == month)
@@ -121,11 +122,15 @@ vector<string> Airport::findAirlinesWithLeastDelayRatio(int month)
     cout << "Sorted Delay ratios" << endl;
     for(int i = 0; i < delayRatios.size(); i++)
     {
-        cout << delayRatios[i] << ", ";
+        double onTimeRatio = (1 - delayRatios[i]) * 100;
+        string onTimeRatioStr = to_string(onTimeRatio);
+        onTimeRatioStr = onTimeRatioStr.substr(0, onTimeRatioStr.size() - 4);
+        onTimeRatios.push_back(onTimeRatioStr);
+        cout << onTimeRatioStr << ", ";
     }
     cout << endl;
 
-    vector<string> efficientAirlines;
+    vector<string> efficientAirlinesNames;
     cout << "Most efficient airlines: " << endl;
 
     for(int i = 0; i < delayRatios.size(); i++)
@@ -135,45 +140,53 @@ vector<string> Airport::findAirlinesWithLeastDelayRatio(int month)
             if(iter->second->_delayRatio == delayRatios[i])
             {
                 string airlineName = iter->second->_airlineName;
-                efficientAirlines.push_back(airlineName);
+                efficientAirlinesNames.push_back(airlineName);
                 cout << airlineName << ", ";
             }
         }
     }
     cout << endl;
     cout << endl;
+
+    pair<vector<string>, vector<string>> efficientAirlines = make_pair(efficientAirlinesNames, onTimeRatios);
     return efficientAirlines;
 }
 
-vector<string> Airport::findAirlinesWithLeastAirlineDelayRatio(int month)
+pair<vector<string>, vector<string>> Airport::findAirlinesWithLeastAirlineDelayRatio(int month)
 {
     //Calculate averages for arrivals and delays.
     calculateAverages();
 
     //Sort by delayRatio
     vector<double> airlineDelayRatios;
+    vector<string> airlineOnTimeRatios;
     for(auto iter = _airlines.begin(); iter != _airlines.end(); iter++)
     {
         if(iter->first.first == month)
         {
-            double tempDelayRatio = iter->second->_airlineDelayRatio;
-            airlineDelayRatios.push_back(tempDelayRatio);
+            double tempAirlineDelayRatio = iter->second->_airlineDelayRatio;
+            airlineDelayRatios.push_back(tempAirlineDelayRatio);
         }
     }
 
-    //cout << "Delay ratios size:  " << delayRatios.size() << endl;
     quickSort(airlineDelayRatios, 0, airlineDelayRatios.size() - 1);
 
+    cout << "Airport: " << _airportName << ", month: " << month << endl;
     cout << "Sorted Delay ratios" << endl;
     for(int i = 0; i < airlineDelayRatios.size(); i++)
     {
-        cout << airlineDelayRatios[i] << ", ";
+        double airlineOnTimeRatio = (1 - airlineDelayRatios[i]) * 100;
+        string airlineOnTimeRatioStr = to_string(airlineOnTimeRatio);
+        airlineOnTimeRatioStr = airlineOnTimeRatioStr.substr(0, airlineOnTimeRatioStr.size() - 4);
+        airlineOnTimeRatios.push_back(airlineOnTimeRatioStr);
+        cout << airlineOnTimeRatioStr << ", ";
     }
     cout << endl;
 
-    vector<string> efficientAirlines;
+    vector<string> efficientAirlinesNames;
     cout << "Most efficient airlines: " << endl;
 
+    cout << "Size: " << airlineDelayRatios.size() << endl;
     for(int i = 0; i < airlineDelayRatios.size(); i++)
     {
         for(auto iter = _airlines.begin(); iter != _airlines.end(); iter++)
@@ -181,12 +194,15 @@ vector<string> Airport::findAirlinesWithLeastAirlineDelayRatio(int month)
             if(iter->second->_airlineDelayRatio == airlineDelayRatios[i])
             {
                 string airlineName = iter->second->_airlineName;
-                efficientAirlines.push_back(airlineName);
+                efficientAirlinesNames.push_back(airlineName);
                 cout << airlineName << ", ";
             }
         }
     }
     cout << endl;
+    cout << endl;
+
+    pair<vector<string>, vector<string>> efficientAirlines = make_pair(efficientAirlinesNames, airlineOnTimeRatios);
     return efficientAirlines;
 }
 
@@ -236,12 +252,12 @@ void Airport::heapSort(vector<double>& values, int size) // keep editing later
     // Building heap (max heap)
     for (int i = size / 2 - 1; i >= 0; i--)
         heapify(values, size, i);
- 
+
     // Extract min value and swap it to the end of the vector
     for (int i = size - 1; i >= 0; i--) {
 
         swap(values[0], values[i]);
- 
+
         // max heapify on the rest of the heap
         heapify(values, i, 0);
     }
@@ -256,18 +272,16 @@ void Airport::heapify(vector<double>& values, int size, int node)
     // check if left child is larger than root and update max value index
     if (left < size && values[left] > values[max])
         max = left;
- 
+
     // check if right child larger than largest and update max value index
     if (right < size && values[right] > values[max])
         max = right;
- 
+
     // Is largest not root?
     if (max != node) {
         swap(values[node], values[max]);
-        
+
         // Recursively heapify the sub-tree
         heapify(values, size, max);
     }
- 
 }
-

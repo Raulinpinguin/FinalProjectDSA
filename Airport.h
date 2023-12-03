@@ -18,6 +18,8 @@ class Airport
         vector<double> _airlineDelayTime;
         double _arrivalsAvg, _delaysAvg, _airlineDelaysAvg, _delayTimeAvg, _airlineDelayTimeAvg;
         double _delayRatio;
+        double _onTimePercentage;
+        double _airlineOnTimePercentage;
         double _airlineDelayRatio;
 
         Airline(string airlineCode, string airlineName)
@@ -63,16 +65,14 @@ public:
     void printAirlinesInfo(int month);
 
     //Returns a vector with the name of the Airlines with the least delay ratio. Delay ratio = delays/arrivals.
-    vector<string> findAirlinesWithLeastDelayRatio(int month);
+    pair<vector<string>, vector<string>> findAirlinesWithLeastDelayRatio(int month);
 
     //Returns a vector with the name of the Airlines with the least airline delay ratio. Airline Delay ratio = airline delays/delays.
-    vector<string> findAirlinesWithLeastAirlineDelayRatio(int month);
+    pair<vector<string>, vector<string>> findAirlinesWithLeastAirlineDelayRatio(int month);
 
     void quickSort(vector<double>& values, int low, int high);
 
     void heapSort(vector<double>& values, int size);
-
-    void extractMin();
 
     void heapify(vector<double>& values, int size, int node);
 };

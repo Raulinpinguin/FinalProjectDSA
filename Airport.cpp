@@ -44,21 +44,26 @@ void Airport::printAirlinesInfo(int month)
     cout << "Month: " << month << endl;
     for(auto iter = _airlines.begin(); iter != _airlines.end(); iter++)
     {
-
-        for(int i = 0; i < iter->second->_arrivals.size(); i++)
+        if(iter->second->_airlineCode == "AA" && iter->first.first == 7)
         {
-            cout << "Year: " << i + 1 << endl;
-            cout << "Airline: " << iter->second->_airlineName << ", ";
-            cout << "Arrivals: " << iter->second->_arrivals[i] << ", ";
-            cout << "Delayed Arrivals: " << iter->second->_delays[i] << ", ";
-            cout << "Airline Delayed Arrivals:  " << iter->second->_airlineDelays[i] << ", ";
-            cout << "Delay time: " << iter->second->_delayTime[i] << ", ";
+            for(int i = 0; i < iter->second->_arrivals.size(); i++)
+            {
+                cout << "Year: " << i + 1 << endl;
+                cout << "Airline: " << iter->second->_airlineName << ", ";
+                cout << "Code: " << iter->second->_airlineCode << ", ";
+                cout << "Arrivals: " << iter->second->_arrivals[i] << ", ";
+                cout << "Delayed Arrivals: " << iter->second->_delays[i] << ", ";
+                cout << "Airline Delayed Arrivals:  " << iter->second->_airlineDelays[i] << ", ";
+                cout << "Delay time: " << iter->second->_delayTime[i] << ", ";
+                cout << endl;
+            }
+            cout << endl;
+            cout << "Avg Arrivals: " << iter->second->_arrivalsAvg << ", ";
+            cout << "Avg Delays: " << iter->second->_delaysAvg << ", ";
+            cout << "Avg Delay Ratio: " << iter->second->_delayRatio << ", ";
+            cout << endl;
         }
 
-        cout << "Avg Arrivals: " << iter->second->_arrivalsAvg << ", ";
-        cout << "Avg Delays: " << iter->second->_delaysAvg << ", ";
-        cout << "Avg Delay Ratio: " << iter->second->_delayRatio << ", ";
-        cout << endl;
     }
     cout << endl;
 }
@@ -158,20 +163,6 @@ int Airport::partition(vector<double>& values, int low, int high)
         {
             down--;
         }
-        /*
-        for(int i = up; i < high; i++)
-        {
-            if(values[up] > pivot)
-                break;
-            up++;
-        }
-        for(int i = high; i > low; i--)
-        {
-            if(values[down] < pivot)
-                break;
-            down--;
-        }
-         */
 
         if(up < down)
         {

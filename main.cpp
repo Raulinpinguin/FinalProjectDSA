@@ -36,7 +36,8 @@ int main()
     getline(file, line);
 
     int i = 0;
-    while(getline(file, line) && i < 2321)
+
+    while(getline(file, line) && i < 100000)
     {
         istringstream iss(line);
 
@@ -66,6 +67,12 @@ int main()
         getline(iss, securityDelay, ',');
         getline(iss, lateFlightDelay, ',');
 
+        //Check if data exists (some rows in data set are empty)
+        if(arrivals == "" || delayedArrivals == "")
+        {
+            continue;
+        }
+
         //If airport does not exist
         if(airports.find(airportCode) == airports.end())
         {
@@ -86,15 +93,19 @@ int main()
         i++;
     }
 
+/*
+    Airport* dorado = new Airport("Dorado", "Bogota", "Col");
+
+    dorado->addFlightData("1", "AV", "Avianca", "12", "4", "3", "100", "50");
+    dorado->addFlightData("1", "AV", "Avianca", "13", "1", "1", "130", "90");
+    dorado->addFlightData("1", "AV", "Avianca", "14", "5", "4", "160", "100");
+
+    dorado->printAirlinesInfo(1);
+   */
+
     airports["ATL"]->printAirlinesInfo(7);
 
-    /*
-    for(auto iter = airports.begin(); iter != airports.end(); iter++)
-    {
-        cout << "Airport Code: " << iter->first << endl;
-        iter->second->printAirlinesInfo(7);
-    }
-    */
+
 
     //User requests to see the airlines with least delays/arrivals percentage (How many of the arrivals were delayed).
     airports["ATL"]->findAirlinesWithLeastDelayRatio(7);
@@ -112,18 +123,17 @@ int main()
     cout << endl;
 
 
-
-
     /*
-      cout << "Year: " << year << endl;
-    cout << "Airport name" << airportName << endl;
-    cout << "Airport code: " << airportCode << endl;
-    cout << "City: " << city << endl;
-    cout << "State: " << state << endl;
-    cout << "Arriving flights " <<  arrivals << endl;
-    cout << "airline name: " << airlineName << endl;
-    cout << "airline count: " << airlineCount << endl;
-    cout << "delay time: " << delayTime << endl;
+        cout << "Year: " << year << endl;
+        cout << "Month: " << month << endl;
+        cout << "Airport name" << airportName << endl;
+        cout << "Airport code: " << airportCode << endl;
+        cout << "City: " << city << endl;
+        cout << "State: " << state << endl;
+        cout << "Arriving flights " <<  arrivals << endl;
+        cout << "airline name: " << airlineName << endl;
+        cout << "airline count: " << airlineCount << endl;
+        cout << "delay time: " << delayTime << endl;
 
      */
 

@@ -103,18 +103,16 @@ int main()
 
     //airports["ATL"]->findAirlinesWithLeastAirlineDelayRatio(7);
 
-    /*
-     *
     vector<double> unordered = {-100,0,4,12,6,3,9,7,2345,-3,-6,35, 6000};
-    Airport trial("MCO", "Orlando", "FL");
+    Airport trial("MCO", "DSA", "Orlando", "FL");
 
-    trial.quickSort(unordered, 0, 12);
+    trial.heapSort(unordered, 13);
     for(int i = 0; i < unordered.size(); i++)
     {
         cout << ", " << unordered[i];
     }
 
-        Airport* dorado = new Airport("Dorado", "Bogota", "Col");
+        /*Airport* dorado = new Airport("Dorado", "Bogota", "Col");
 
         dorado->addFlightData("1", "AV", "Avianca", "12", "4", "3", "100", "50");
         dorado->addFlightData("1", "AV", "Avianca", "13", "1", "1", "130", "90");
@@ -130,8 +128,7 @@ int main()
         cout << "Arriving flights " <<  arrivals << endl;
         cout << "airline name: " << airlineName << endl;
         cout << "airline count: " << airlineCount << endl;
-        cout << "delay time: " << delayTime << endl;
+        cout << "delay time: " << delayTime << endl;*/
 
-     */
     return 0;
 }

@@ -237,40 +237,35 @@ void Airport::heapSort(vector<double>& values, int size) // keep editing later
     for (int i = size / 2 - 1; i >= 0; i--)
         heapify(values, size, i);
  
-    // Take top element from heap
+    // Extract min value and swap it to the end of the vector
     for (int i = size - 1; i >= 0; i--) {
-        // Move current root to end
-        swap(values[0], arr[i]);
+
+        swap(values[0], values[i]);
  
-        // call max heapify on the reduced heap
+        // max heapify on the rest of the heap
         heapify(values, i, 0);
     }
 }
 
-void Airport::extractMin( )
-{
-   values[0] = values[--currentSize];
-    heapifyDown(0);
-}
 void Airport::heapify(vector<double>& values, int size, int node)
 {
     int max = node; // Initialize largest as root Since we are using 0 based indexing
     int left = 2 * node + 1; // left child
     int right = 2 * node + 2; // right child
 
-    // If left child is larger than root
-    if (l < size && values[left] > values[max])
-        max = l;
+    // check if left child is larger than root and update max value index
+    if (left < size && values[left] > values[max])
+        max = left;
  
-    // If right child is larger than largest so far
-    if (r < size && values[right] > values[max])
-        max = r;
+    // check if right child larger than largest and update max value index
+    if (right < size && values[right] > values[max])
+        max = right;
  
-    // If largest is not root
+    // Is largest not root?
     if (max != node) {
         swap(values[node], values[max]);
         
-        // Recursively heapify the affected sub-tree
+        // Recursively heapify the sub-tree
         heapify(values, size, max);
     }
  

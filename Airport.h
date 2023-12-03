@@ -69,4 +69,10 @@ public:
     vector<string> findAirlinesWithLeastAirlineDelayRatio(int month);
 
     void quickSort(vector<double>& values, int low, int high);
+
+    void heapSort(vector<double>& values, int size);
+
+    void extractMin();
+
+    void heapify(vector<double>& values, int size, int node);
 };

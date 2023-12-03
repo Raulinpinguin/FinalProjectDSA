@@ -18,6 +18,7 @@ class Airport
         vector<double> _airlineDelayTime;
         double _arrivalsAvg, _delaysAvg, _airlineDelaysAvg, _delayTimeAvg, _airlineDelayTimeAvg;
         double _delayRatio;
+        double _airlineDelayRatio;
 
         Airline(string airlineCode, string airlineName)
         {
@@ -38,27 +39,34 @@ class Airport
     string _airportName;
     string _city;
     string _stateCode;
+    string _airportCode;
 
     //Airlines map has pair of month and airline-code as key and airline object as value.
     map<pair<int, string>, Airline*> _airlines;
 
+    //Private Helper Methods
+    //Calculates averages throughout the different years for all airlines data (arrivals, delays, etc)
     void calculateAverages();
+    int partition(vector<double>& values, int low, int high);
 
 public:
     //Constructor
-    Airport(string airportName, string city, string stateCode);
+    Airport(string airportCode, string airportName, string city, string stateCode);
+
+    //Print Airport Info
+    void printAirportInfo();
 
     //Adds new flight delay data for a certain month and airline.
-    void addFlightData(string month, string airlineCode, string airlineName, string arrivalsS, string totalDelaysS, string airlineDelaysS, string totalDelayTimeS, string airlineDelayTimeS);
+    void addFlightData(string monthS, string airlineCode, string airlineName, string arrivalsS, string totalDelaysS, string airlineDelaysS, string totalDelayTimeS, string airlineDelayTimeS);
 
-    //Prints all airlines info for a particular month.
+    //Prints all airlines' info for a particular month.
     void printAirlinesInfo(int month);
-    vector<Airline*> sortByNumberOfDelayFlights();
 
-    //
-    void findAirlinesWithLeastDelayRatio(int month);
+    //Returns a vector with the name of the Airlines with the least delay ratio. Delay ratio = delays/arrivals.
+    vector<string> findAirlinesWithLeastDelayRatio(int month);
+
+    //Returns a vector with the name of the Airlines with the least airline delay ratio. Airline Delay ratio = airline delays/delays.
+    vector<string> findAirlinesWithLeastAirlineDelayRatio(int month);
 
     void quickSort(vector<double>& values, int low, int high);
-    int partition(vector<double>& values, int low, int high);
-
 };

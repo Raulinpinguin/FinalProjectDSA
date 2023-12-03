@@ -27,17 +27,13 @@ int main()
     //Create map to store all airports. Key is airport code, value is airport object.
     map<string, Airport*> airports;
 
-    //this is a test
-
     string line;
     string year, month, airlineCode, airlineName, airportCode, city, state, airportName, arrivals, delayedArrivals, airlineCount, weatherCount, nasCount, securityCount, lateFlightCount, cancelled, diverted, delayTime, airlineDelay, weatherDelay, nasDelay, securityDelay, lateFlightDelay;
 
     //Get rid of first line
     getline(file, line);
 
-    int i = 0;
-
-    while(getline(file, line) && i < 100000)
+    while(getline(file, line))
     {
         istringstream iss(line);
 
@@ -48,9 +44,14 @@ int main()
         getline(iss, airportCode, ',');
 
         getline(iss, city, ',');
+        city = city.substr(1, city.size());
+
         getline(iss, state, ':');
+        state = state.substr(1, state.size());
 
         getline(iss, airportName, ',');
+        airportName = airportName.substr(1, airportName.size() - 2);
+
         getline(iss, arrivals, ',');
         getline(iss, delayedArrivals, ',');
         getline(iss, airlineCount, ',');
@@ -77,7 +78,7 @@ int main()
         if(airports.find(airportCode) == airports.end())
         {
             //Create Airport object
-            Airport* airport = new Airport(airportName, city, state);
+            Airport* airport = new Airport(airportCode, airportName, city, state);
 
             //Add airport to airports map
             airports[airportCode] = airport;
@@ -90,28 +91,20 @@ int main()
             //Add flight data to the existing airport.
             airports[airportCode]->addFlightData(month, airlineCode, airlineName, arrivals, delayedArrivals, airlineCount, delayTime, airlineDelay);
         }
-        i++;
     }
 
-/*
-    Airport* dorado = new Airport("Dorado", "Bogota", "Col");
-
-    dorado->addFlightData("1", "AV", "Avianca", "12", "4", "3", "100", "50");
-    dorado->addFlightData("1", "AV", "Avianca", "13", "1", "1", "130", "90");
-    dorado->addFlightData("1", "AV", "Avianca", "14", "5", "4", "160", "100");
-
-    dorado->printAirlinesInfo(1);
-   */
-
+    airports["ATL"]->printAirportInfo();
     airports["ATL"]->printAirlinesInfo(7);
 
-
-
     //User requests to see the airlines with least delays/arrivals percentage (How many of the arrivals were delayed).
-    airports["ATL"]->findAirlinesWithLeastDelayRatio(7);
+    airports["PWM"]->findAirlinesWithLeastDelayRatio(7);
+    airports["ATL"]->findAirlinesWithLeastDelayRatio(1);
 
 
-    cout << endl;
+    //airports["ATL"]->findAirlinesWithLeastAirlineDelayRatio(7);
+
+    /*
+     *
     vector<double> unordered = {-100,0,4,12,6,3,9,7,2345,-3,-6,35, 6000};
     Airport trial("MCO", "Orlando", "FL");
 
@@ -120,10 +113,14 @@ int main()
     {
         cout << ", " << unordered[i];
     }
-    cout << endl;
 
+        Airport* dorado = new Airport("Dorado", "Bogota", "Col");
 
-    /*
+        dorado->addFlightData("1", "AV", "Avianca", "12", "4", "3", "100", "50");
+        dorado->addFlightData("1", "AV", "Avianca", "13", "1", "1", "130", "90");
+        dorado->addFlightData("1", "AV", "Avianca", "14", "5", "4", "160", "100");
+
+        dorado->printAirlinesInfo(1);
         cout << "Year: " << year << endl;
         cout << "Month: " << month << endl;
         cout << "Airport name" << airportName << endl;
@@ -136,7 +133,5 @@ int main()
         cout << "delay time: " << delayTime << endl;
 
      */
-
-
     return 0;
 }

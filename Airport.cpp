@@ -148,6 +148,16 @@ void Airport::quickSort(vector<double>& values, int low, int high)
     }
 }
 
+void Airport::heapSort(vector<double>& values, int low, int high) // keep editing later
+{
+    if(low < high)
+    {
+        int pivotIndex = partition(values, low, high);
+        quickSort(values, low, pivotIndex - 1);
+        quickSort(values, pivotIndex + 1, high);
+    }
+}
+
 int Airport::partition(vector<double>& values, int low, int high)
 {
     double pivot = values[low];

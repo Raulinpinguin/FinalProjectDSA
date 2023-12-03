@@ -35,7 +35,8 @@ int main()
     //Get rid of first line
     getline(file, line);
 
-    while(getline(file, line))
+    int i = 0;
+    while(getline(file, line) && i < 2321)
     {
         istringstream iss(line);
 
@@ -65,29 +66,42 @@ int main()
         getline(iss, securityDelay, ',');
         getline(iss, lateFlightDelay, ',');
 
-        //Create Airport object
-        Airport* airport = new Airport(airportName, city, state);
+        //If airport does not exist
+        if(airports.find(airportCode) == airports.end())
+        {
+            //Create Airport object
+            Airport* airport = new Airport(airportName, city, state);
 
-        //Add data to airport
-        airport->addFlightData(month, airlineCode, airlineName, arrivals, delayedArrivals, airlineCount, delayTime, airlineDelay);
+            //Add airport to airports map
+            airports[airportCode] = airport;
 
-        //Check if airport already exists
-        //If not add it to the map, otherwise add flight data to the existing airport.
-        //Add airport to airports map
-        airports[airportCode] = airport;
-        break;
+            //Add data to airport
+            airports[airportCode]->addFlightData(month, airlineCode, airlineName, arrivals, delayedArrivals, airlineCount, delayTime, airlineDelay);
+        }
+        else //airport exists in map
+        {
+            //Add flight data to the existing airport.
+            airports[airportCode]->addFlightData(month, airlineCode, airlineName, arrivals, delayedArrivals, airlineCount, delayTime, airlineDelay);
+        }
+        i++;
     }
 
+    airports["ATL"]->printAirlinesInfo(7);
+
+    /*
     for(auto iter = airports.begin(); iter != airports.end(); iter++)
     {
         cout << "Airport Code: " << iter->first << endl;
-        cout << "Month: " << month << endl;
-
-
+        iter->second->printAirlinesInfo(7);
     }
+    */
+
+    //User requests to see the airlines with least delays/arrivals percentage (How many of the arrivals were delayed).
+    airports["ATL"]->findAirlinesWithLeastDelayRatio(7);
 
 
-    vector<int> unordered = {-100,0,4,12,6,3,9,7,2345,-3,-6,35, 6000};
+    cout << endl;
+    vector<double> unordered = {-100,0,4,12,6,3,9,7,2345,-3,-6,35, 6000};
     Airport trial("MCO", "Orlando", "FL");
 
     trial.quickSort(unordered, 0, 12);

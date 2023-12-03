@@ -200,42 +200,6 @@ void Airport::quickSort(vector<double>& values, int low, int high)
     }
 }
 
-void Airport::heapSort(vector<double>& values, int low, int high) // keep editing later
-{
-    if(low < high)
-    {
-        int pivotIndex = partition(values, low, high);
-        quickSort(values, low, pivotIndex - 1);
-        quickSort(values, pivotIndex + 1, high);
-    }
-}
-
-void Airport::extractMin( )
-{
-    arr[0] = arr[--currentSize];
-    heapifyDown(0);
-}
-void heapify(int arr[], int size, int index)
-{
-    int largest = i; // Initialize largest as root Since we are using 0 based indexing
-    int left = 2 * i + 1; // left = 2*i + 1
-    int right = 2 * i + 2; // right = 2*i + 2
-
-    // If left child is larger than root
-    if (l < n && arr[l] > arr[largest])
-        largest = l;
- 
-    // If right child is larger than largest so far
-    if (r < n && arr[r] > arr[largest])
-        largest = r;
- 
-    // If largest is not root
-    if (largest != i) {
-        swap(arr[i], arr[largest]);
- 
-}
-
-
 int Airport::partition(vector<double>& values, int low, int high)
 {
     double pivot = values[low];
@@ -266,3 +230,49 @@ int Airport::partition(vector<double>& values, int low, int high)
     //swap(values[low], values[down]);
     return down;
 }
+
+void Airport::heapSort(vector<double>& values, int size) // keep editing later
+{
+    // Building heap (max heap)
+    for (int i = size / 2 - 1; i >= 0; i--)
+        heapify(values, size, i);
+ 
+    // Take top element from heap
+    for (int i = size - 1; i >= 0; i--) {
+        // Move current root to end
+        swap(values[0], arr[i]);
+ 
+        // call max heapify on the reduced heap
+        heapify(values, i, 0);
+    }
+}
+
+void Airport::extractMin( )
+{
+   values[0] = values[--currentSize];
+    heapifyDown(0);
+}
+void Airport::heapify(vector<double>& values, int size, int node)
+{
+    int max = node; // Initialize largest as root Since we are using 0 based indexing
+    int left = 2 * node + 1; // left child
+    int right = 2 * node + 2; // right child
+
+    // If left child is larger than root
+    if (l < size && values[left] > values[max])
+        max = l;
+ 
+    // If right child is larger than largest so far
+    if (r < size && values[right] > values[max])
+        max = r;
+ 
+    // If largest is not root
+    if (max != node) {
+        swap(values[node], values[max]);
+        
+        // Recursively heapify the affected sub-tree
+        heapify(values, size, max);
+    }
+ 
+}
+

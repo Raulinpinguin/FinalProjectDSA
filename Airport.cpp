@@ -210,6 +210,32 @@ void Airport::heapSort(vector<double>& values, int low, int high) // keep editin
     }
 }
 
+void Airport::extractMin( )
+{
+    arr[0] = arr[--currentSize];
+    heapifyDown(0);
+}
+void heapify(int arr[], int size, int index)
+{
+    int largest = i; // Initialize largest as root Since we are using 0 based indexing
+    int left = 2 * i + 1; // left = 2*i + 1
+    int right = 2 * i + 2; // right = 2*i + 2
+
+    // If left child is larger than root
+    if (l < n && arr[l] > arr[largest])
+        largest = l;
+ 
+    // If right child is larger than largest so far
+    if (r < n && arr[r] > arr[largest])
+        largest = r;
+ 
+    // If largest is not root
+    if (largest != i) {
+        swap(arr[i], arr[largest]);
+ 
+}
+
+
 int Airport::partition(vector<double>& values, int low, int high)
 {
     double pivot = values[low];

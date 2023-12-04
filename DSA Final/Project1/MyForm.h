@@ -14,10 +14,8 @@
 #include <msclr\marshal_cppstd.h>
 #include "Airport.h"
 
-
-
-
-namespace Project1 {
+namespace Project1 
+{
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -25,7 +23,6 @@ namespace Project1 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-
 
 	/// <summary>
 	/// Summary for MyForm
@@ -40,10 +37,7 @@ namespace Project1 {
 		{
 			airports = mapping; // Get reference to the airpots map from main execution 
 			
-
-
 			InitializeComponent();
-
 
 			//
 			//TODO: Add the constructor code here
@@ -63,8 +57,6 @@ namespace Project1 {
 		}
 
 		
-
-
 	private: System::Windows::Forms::TextBox^ page_title;
 
 	private: System::Windows::Forms::TextBox^ instruction_text_2;
@@ -117,10 +109,6 @@ namespace Project1 {
 	private: System::Windows::Forms::TextBox^ delay_type_label;
 	private: System::Windows::Forms::ContextMenuStrip^ contextMenuStrip1;
 	private: System::ComponentModel::IContainer^ components;
-
-
-
-
 
 	protected:
 
@@ -1121,7 +1109,6 @@ namespace Project1 {
 			}
 
 
-
 			//Update table entries 
 			if (sorted_data.first.size() > 0) { //Check to ensure propor size of airline vector 
 				this->airline_1->Text = gcnew String((sorted_data.first)[0].data()); // Convert std::string to System::String and change the value in the table
@@ -1205,12 +1192,7 @@ namespace Project1 {
 				this->percent_text_10->Text = "";
 			}
 
-
-
 		}
-
-	
-
 
 	}
 	};

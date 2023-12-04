@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdint.h>
-
 #include <msclr\marshal_cppstd.h>
 #include "Airport.h"
 
@@ -38,10 +37,6 @@ namespace Project1
 			airports = mapping; // Get reference to the airpots map from main execution 
 			
 			InitializeComponent();
-
-			//
-			//TODO: Add the constructor code here
-			//
 		}
 
 	protected:

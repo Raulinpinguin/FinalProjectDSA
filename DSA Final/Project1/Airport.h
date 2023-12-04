@@ -3,9 +3,6 @@
 #include <vector>
 #include <map>
 #include <set>
-//#include "C.h"
- 
-
 
 class Airport
 {
@@ -73,6 +70,7 @@ class Airport
             iter->second->_airlineDelayRatio = iter->second->_airlineDelaysAvg / iter->second->_arrivalsAvg;
         }
     }
+    //Quick sort helper method.
     int partition(std::vector<double>& values, int low, int high)
     {
         double pivot = values[low];
@@ -81,14 +79,16 @@ class Airport
         while (up < down)
         {
             for (int j = up; j < high; j++) {
-                if (values[up] > pivot) {
+                if (values[up] > pivot) 
+                {
                     break;
                 }
                 up++;
             }
             for (int j = high; j > low; j--)
             {
-                if (values[down] < pivot) {
+                if (values[down] < pivot) 
+                {
                     break;
                 }
                 down--;
@@ -119,7 +119,6 @@ public:
         _stateCode = stateCode;
     }
 
-
     //Adds new flight delay data for a certain month and airline.
     void addFlightData(std::string monthS, std::string airlineCode, std::string airlineName, std::string arrivalsS, std::string totalDelaysS, std::string airlineDelaysS, std::string totalDelayTimeS, std::string airlineDelayTimeS)
     {
@@ -148,7 +147,6 @@ public:
         }
 
     }
-
 
     //Returns a std::vector with the name of the Airlines with the least delay ratio Quicksort. Delay ratio = delays/arrivals.
     std::pair<std::vector<std::string>, std::vector<std::string>> QuicksortByDelayRatio(int month)
@@ -189,12 +187,11 @@ public:
                 if (iter->second->_delayRatio == delayRatios[i])
                 {
                     std::string airlineName = iter->second->_airlineName;
-                    if (visited.count(airlineName) == 0) {
+                    if (visited.count(airlineName) == 0) 
+                    {
                         visited.insert(airlineName);
                         efficientAirlinesNames.push_back(airlineName);
                     }
-
-
                 }
             }
         }
@@ -210,7 +207,6 @@ public:
         //Calculate averages for arrivals and delays.
         calculateAverages();
       
-
         //Sort by delayRatio
         std::vector<double> airlineDelayRatios;
         std::vector<std::string> airlineOnTimeRatios;
@@ -224,7 +220,6 @@ public:
         }
 
         quickSort(airlineDelayRatios, 0, airlineDelayRatios.size() - 1);
-
         
         for (int i = 0; i < airlineDelayRatios.size(); i++)
         {
@@ -244,22 +239,19 @@ public:
                 if (iter->second->_airlineDelayRatio == airlineDelayRatios[i])
                 {
                     std::string airlineName = iter->second->_airlineName;
-                    if (visited.count(airlineName) == 0) {
+                    if (visited.count(airlineName) == 0) 
+                    {
                         visited.insert(airlineName);
                         efficientAirlinesNames.push_back(airlineName);
                     }
-
-
                 }
             }
         }
-
 
         std::pair<std::vector<std::string>, std::vector<std::string>> efficientAirlines = make_pair(efficientAirlinesNames, airlineOnTimeRatios);
         
         return efficientAirlines;
     }
-
 
     //Returns a std::vector with the name of the Airlines with the least delay ratio using Heapsort. Delay ratio = delays/arrivals.
     std::pair<std::vector<std::string>, std::vector<std::string>> HeapsortByDelayRatio(int month)
@@ -298,12 +290,11 @@ public:
                 if (iter->second->_delayRatio == delayRatios[i])
                 {
                     std::string airlineName = iter->second->_airlineName;
-                    if (visited.count(airlineName) == 0) {
+                    if (visited.count(airlineName) == 0) 
+                    {
                         visited.insert(airlineName);
                         efficientAirlinesNames.push_back(airlineName);
                     }
-
-
                 }
             }
         }
@@ -341,7 +332,6 @@ public:
 
         }
 
-
         std::vector<std::string> efficientAirlinesNames;
         std::set<std::string> visited;
         for (int i = 0; i < airlineDelayRatios.size(); i++)
@@ -351,12 +341,11 @@ public:
                 if (iter->second->_airlineDelayRatio == airlineDelayRatios[i])
                 {
                     std::string airlineName = iter->second->_airlineName;
-                    if (visited.count(airlineName) == 0) {
+                    if (visited.count(airlineName) == 0) 
+                    {
                         visited.insert(airlineName);
                         efficientAirlinesNames.push_back(airlineName);
                     }
-
-
                 }
             }
         }
@@ -366,7 +355,6 @@ public:
         return efficientAirlines;
     }
 
-
     void quickSort(std::vector<double>& values, int low, int high)
     {
         if (low < high)
@@ -374,9 +362,7 @@ public:
             int pivotIndex = partition(values, low, high);
             quickSort(values, low, pivotIndex - 1);
             quickSort(values, pivotIndex + 1, high);
-        }
-        
-
+        }       
     }
 
     void heapSort(std::vector<double>& values, int size)

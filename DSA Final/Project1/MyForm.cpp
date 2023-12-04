@@ -1,9 +1,6 @@
 
-
-
 //This code is based on this tutorial for setting up WinFrame:
 //https://www.youtube.com/watch?v=s7q0M4gJyB0&list=PL2i17lRog5pBe7t9zJdFdugQ6bxgjntJD&index=3
-
 
 #include "MyForm.h"
 //Begin reference 
@@ -11,7 +8,8 @@ using namespace System;
 using namespace System::Windows::Forms;
 [STAThreadAttribute]
 
-void main(array <String^>^ args) {
+void main(array <String^>^ args) 
+{
 
 //End reference here
     //Read all data
@@ -100,8 +98,5 @@ void main(array <String^>^ args) {
 	Application::EnableVisualStyles();
 	Project1::MyForm frm(&airports);//Non default constructor 
 	Application::Run(% frm);
-
 	// End reference here
-
-
 }

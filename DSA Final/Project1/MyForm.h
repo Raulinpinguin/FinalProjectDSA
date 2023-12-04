@@ -53,13 +53,10 @@ namespace Project1
 
 		
 	private: System::Windows::Forms::TextBox^ page_title;
-
 	private: System::Windows::Forms::TextBox^ instruction_text_2;
 	private: System::Windows::Forms::Button^ gen_table_button;
 	private: System::Windows::Forms::TableLayoutPanel^ tableLayoutPanel1;
-
 	private: System::Windows::Forms::TextBox^ table_title;
-
 	private: System::Windows::Forms::TextBox^ first_place_text;
 	private: System::Windows::Forms::TextBox^ third_place_text;
 	private: System::Windows::Forms::TextBox^ second_place_text;
@@ -894,6 +891,7 @@ namespace Project1
 
 
 #pragma endregion
+	//These were automatically added by the visual designed, but removing them breaks the code. 
 	private: System::Void month_dropdown_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void month_text_TextChanged(System::Object^ sender, System::EventArgs^ e) {
